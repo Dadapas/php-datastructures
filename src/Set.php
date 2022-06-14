@@ -3,7 +3,7 @@ namespace Dadapas\Ds;
 
 use Iterator;
 
-class Set implements Iterator
+class Set extends Hash implements Iterator
 {
 	private $arr = [];
 
@@ -26,23 +26,23 @@ class Set implements Iterator
 		if ( ! $this->has($value) )
 			$this->size++;
 
-		$this->arr[$value] = $value;
+		$this->arr[$this->hash($value)] = $value;
 		$this->position = 0;
 	}
 
 	public function delete($value)
 	{
-		if (isset($this->arr[$value]))
+		if (isset($this->arr[$this->hash($value)]))
 		{
 			$this->size--;
-			unset($this->arr[$value]);
+			unset($this->arr[$this->hash($value)]);
 		}
 		$this->position = 0;
 	}
 
 	public function has($value)
 	{
-		return array_key_exists($value, $this->arr);
+		return array_key_exists($this->hash($value), $this->arr);
 	}
 
 	public function length()
